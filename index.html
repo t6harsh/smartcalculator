@@ -74,19 +74,37 @@
         <br>
         <button onclick="calculateSum()">Calculate Sum!</button>
         <div class="message-container" id="output" style="display: none;">
-            <p class="message-title">Mathematical breakthrough! The sum of <span id="firstNum"></span> and <span id="secondNum"></span> is Hello world.</p>
-            <p class="message-text">Sorry, I have started programming yesterday. 🥲</p>
+            <p class="message-title" id="messageTitle"></p>
+            <p class="message-text" id="messageText"></p>
         </div>
     </div>
 
     <script>
+        let messageIndex = 0;
+        const messages = [
+            { title: "Mathematical breakthrough!", text: "The sum of <span id='firstNum'></span> and <span id='secondNum'></span> is... ERROR 404: Math skills not found!<br><br> Please try once more. I have found your answer!" },
+            { title: "Wait, you trusted me? 😆", text: "Numbers are hard... let's just say it's somewhere between -Infinity and Infinity!<br><br> Okay go on ChatGPT or you still want one more time? 🤔" },
+            { title: "Fine, fine... here it is!", text: "The sum is I still don't know 😂<br><br> You haven't read LKG? Go and read, you silly!" }
+        ];
+
         function calculateSum() {
-            alert("Oops! Something went wrong. Just kidding, I don't know how to do this yet 😆");
             let num1 = document.getElementById("num1").value;
             let num2 = document.getElementById("num2").value;
-            document.getElementById("firstNum").textContent = num1;
-            document.getElementById("secondNum").textContent = num2;
+            let messageTitle = document.getElementById("messageTitle");
+            let messageText = document.getElementById("messageText");
+            
+            if (!num1 || !num2) {
+                messageTitle.innerHTML = "Oops!";
+                messageText.innerHTML = "Did you just try to sum... air? Enter numbers, please! 😆";
+            } else {
+                let sum = parseFloat(num1) + parseFloat(num2);
+                let currentMessage = messages[messageIndex];
+                messageTitle.innerHTML = currentMessage.title;
+                messageText.innerHTML = currentMessage.text.replace("<span id='sumResult'></span>", sum);
+            }
+            
             document.getElementById("output").style.display = "block";
+            messageIndex = (messageIndex + 1) % messages.length;
         }
     </script>
 </body>
